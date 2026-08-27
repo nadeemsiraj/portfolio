@@ -266,3 +266,45 @@ if (contactForm) {
         }, 1500);
     });
 }
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault(); // Ye form ko naye page par jaane se rokega
+
+    var form = e.target;
+    var data = new FormData(form);
+    var statusMessage = document.getElementById('form-status');
+
+    // Loading message dikhayein
+    statusMessage.innerHTML = "Sending...";
+    statusMessage.style.color = "#00bcd4"; // Aapke theme ka cyan color
+
+    fetch(form.action, {
+        method: form.method,
+        body: data,
+        headers: {
+            'Accept': 'application/json'
+        }
+    }).then(response => {
+        if (response.ok) {
+            statusMessage.innerHTML = "Message Sent Successfully!";
+            statusMessage.style.color = "#00ff00"; // Green color success ke liye
+            form.reset(); // Form submit hone ke baad fields clear kar dega
+            
+            // 5 second baad message hata dega
+            setTimeout(() => {
+                statusMessage.innerHTML = "";
+            }, 5000);
+        } else {
+            response.json().then(data => {
+                if (Object.hasOwn(data, 'errors')) {
+                    statusMessage.innerHTML = data["errors"].map(error => error["message"]).join(", ");
+                } else {
+                    statusMessage.innerHTML = "Oops! There was a problem submitting your form";
+                }
+                statusMessage.style.color = "red";
+            })
+        }
+    }).catch(error => {
+        statusMessage.innerHTML = "Oops! Something went wrong.";
+        statusMessage.style.color = "red";
+    });
+});
