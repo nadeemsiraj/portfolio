@@ -432,24 +432,24 @@
                 </div>
 
                 <div class="contact-form-wrapper glass-card" data-aos="fade-left">
-                <form action="https://formspree.io/f/xqpkzobw" method="POST" class="contact-form">
-                    <div class="form-group">
-                        <!-- 'name="name"' add kiya gaya hai -->
-                       <input type="text" id="name" name="name" placeholder="Your Name" required>
-                 </div>
-                 <div class="form-group">
-                      <!-- 'name="email"' add kiya gaya hai -->
-                     <input type="email" id="email" name="email" placeholder="Your Email" required>
-                 </div>
-                <div class="form-group">
-        <!-- 'name="subject"' add kiya gaya hai -->
+                <form id="contactForm" action="https://formspree.io/f/xqpkzobw" method="POST" class="contact-form">
+    <!-- Aapke saare input fields yahan rahenge -->
+    <div class="form-group">
+        <input type="text" id="name" name="name" placeholder="Your Name" required>
+    </div>
+    <div class="form-group">
+        <input type="email" id="email" name="email" placeholder="Your Email" required>
+    </div>
+    <div class="form-group">
         <input type="text" id="subject" name="subject" placeholder="Subject" required>
     </div>
     <div class="form-group">
-        <!-- 'name="message"' add kiya gaya hai -->
         <textarea id="message" name="message" rows="5" placeholder="Your Message" required></textarea>
     </div>
     <button type="submit" class="btn btn-primary btn-block">Send Message <i class="fas fa-paper-plane"></i></button>
+    
+    <!-- Success/Error message dikhane ke liye ye div hona zaroori hai -->
+    <div id="form-status" class="form-status" style="margin-top: 15px; text-align: center; font-weight: bold;"></div>
 </form>
                     </form>
                 </div>
