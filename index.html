@@ -432,21 +432,25 @@
                 </div>
 
                 <div class="contact-form-wrapper glass-card" data-aos="fade-left">
-                    <form id="contactForm" class="contact-form">
-                        <div class="form-group">
-                            <input type="text" id="name" placeholder="Your Name" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" id="email" placeholder="Your Email" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" id="subject" placeholder="Subject" required>
-                        </div>
-                        <div class="form-group">
-                            <textarea id="message" rows="5" placeholder="Your Message" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-block">Send Message <i class="fas fa-paper-plane"></i></button>
-                        <div id="form-status" class="form-status"></div>
+                <form action="https://formspree.io/f/xqpkzobw" method="POST" class="contact-form">
+                    <div class="form-group">
+                        <!-- 'name="name"' add kiya gaya hai -->
+                       <input type="text" id="name" name="name" placeholder="Your Name" required>
+                 </div>
+                 <div class="form-group">
+                      <!-- 'name="email"' add kiya gaya hai -->
+                     <input type="email" id="email" name="email" placeholder="Your Email" required>
+                 </div>
+                <div class="form-group">
+        <!-- 'name="subject"' add kiya gaya hai -->
+        <input type="text" id="subject" name="subject" placeholder="Subject" required>
+    </div>
+    <div class="form-group">
+        <!-- 'name="message"' add kiya gaya hai -->
+        <textarea id="message" name="message" rows="5" placeholder="Your Message" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary btn-block">Send Message <i class="fas fa-paper-plane"></i></button>
+</form>
                     </form>
                 </div>
             </div>
