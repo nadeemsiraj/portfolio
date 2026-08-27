@@ -266,39 +266,45 @@ if (contactForm) {
         }, 1500);
     });
 }
-const form = document.getElementById('form');
-const submitBtn = form.querySelector('button[type="submit"]');
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault(); // Ye form ko naye page par jaane se rokega
 
-form.addEventListener('submit', async (e) => {
-    e.preventDefault();
+    var form = e.target;
+    var data = new FormData(form);
+    var statusMessage = document.getElementById('form-status');
 
-    const formData = new FormData(form);
-    formData.append("access_key", "1005571a-0128-4b11-a411-12ab66ca72fb");
+    // Loading message dikhayein
+    statusMessage.innerHTML = "Sending...";
+    statusMessage.style.color = "#00bcd4"; // Aapke theme ka cyan color
 
-    const originalText = submitBtn.textContent;
-
-    submitBtn.textContent = "Sending...";
-    submitBtn.disabled = true;
-
-    try {
-        const response = await fetch("https://api.web3forms.com/submit", {
-            method: "POST",
-            body: formData
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-            alert("Success! Your message has been sent.");
-            form.reset();
-        } else {
-            alert("Error: " + data.message);
+    fetch(form.action, {
+        method: form.method,
+        body: data,
+        headers: {
+            'Accept': 'application/json'
         }
-
-    } catch (error) {
-        alert("Something went wrong. Please try again.");
-    } finally {
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
-    }
+    }).then(response => {
+        if (response.ok) {
+            statusMessage.innerHTML = "Message Sent Successfully!";
+            statusMessage.style.color = "#00ff00"; // Green color success ke liye
+            form.reset(); // Form submit hone ke baad fields clear kar dega
+            
+            // 5 second baad message hata dega
+            setTimeout(() => {
+                statusMessage.innerHTML = "";
+            }, 5000);
+        } else {
+            response.json().then(data => {
+                if (Object.hasOwn(data, 'errors')) {
+                    statusMessage.innerHTML = data["errors"].map(error => error["message"]).join(", ");
+                } else {
+                    statusMessage.innerHTML = "Oops! There was a problem submitting your form";
+                }
+                statusMessage.style.color = "red";
+            })
+        }
+    }).catch(error => {
+        statusMessage.innerHTML = "Oops! Something went wrong.";
+        statusMessage.style.color = "red";
+    });
 });
